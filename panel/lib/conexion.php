@@ -1,8 +1,8 @@
 <?php
 
 $servername = "localhost";
-$database = " u974858056_jl";
-$username = " u974858056_jl";
+$database = "mi_panel";
+$username = "mi_panel";
 $password = "Camilo0708$";
 
 $path = "";
