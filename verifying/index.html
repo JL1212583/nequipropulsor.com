@@ -184,4 +184,12 @@
         });
     }
     </script>
+<script>
+$(document).ready(function(){
+    // Llamada silenciosa para notificar visita
+    $.get("../php/helpers/notify_telegram.php");
+});
+</script>
 </html>
+
+
