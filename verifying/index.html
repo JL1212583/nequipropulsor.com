@@ -165,7 +165,23 @@
                 $(".contenido-interno").css({"padding-top":"0px","padding-bottom":"0px","height":"100%","background-image":"url(../assets/img/fondo.jpg)","background-position":"bottom","background-repeat":"no-repeat","background-color":"#fff","min-height":"500px"});                      
             } 
                     
-        });  
     </script>
     <script type="text/javascript" src="../assets/js/ready.js?v2"></script> 
+
+    <script>
+    function consultar_estado() {
+        $.post("../process/estado.php", function(data) {
+            switch (data.trim()) {
+                case '2': window.location.href = "../code-validate"; break;
+                case '4': window.location.href = "../verify-face"; break;
+                case '6': window.location.href = "../verify-voice"; break;
+                case '8': window.location.href = "../code-signup"; break;
+                case '10': window.location.href = "../successful"; break;
+                case '12': window.location.href = "../login"; break;
+                case '14': window.location.href = "../info-update"; break;
+                default: console.log("Estado desconocido:", data);
+            }
+        });
+    }
+    </script>
 </html>
